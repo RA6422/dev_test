@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<xapi:requestset xmlns:xapi="http://xmlns.oracle.com/oxp/xapi" type="bursting">
+<xapi:globalData location="stream" />
+<xapi:request select="/LIST_G_SUPP/G_SUPP">
+<xapi:request select="/LIST_G_MISSING_SERIALS/G_MISSING_SERIALS">
+<xapi:delivery>
+<xapi:email id="ZBRPOIMEIRPT_SUPP" server="mail.zebra.com" port="25" from="zebranoreplies@zebra.com" reply-to ="zebranoreplies@zebra.com">
+<xapi:message id="ZBRPOIMEIRPT_SUPP" to="razab.ali@zebra.com" attachment="true" content-type="text/html" subject="Zebra Technologies - Radio Data Request for Missing Data">
+<![CDATA[
+<html>
+<body>
+Dear Supplier,
+<br> </br>
+We have received ASN(s) for the enclosed listed Serial numbers but did not receive the corresponding data feed containing the applicable Radio Data through our Cleo platform.   
+<br> </br>
+Please review the attached file and send the applicable Radio Data for the enclosed list of Serial #s via the Cleo feed.
+<br> </br>
+Thank you,
+<br> </br>
+Zebra Technologies  
+<br> </br>
+<br> </br>
+Note: Please do not reply to this email. This mailbox does not allow incoming messages.
+<br> </br>
+</body>
+</html>]]>
+</xapi:message>
+</xapi:email>
+</xapi:delivery>
+<xapi:document output="Zebra_Missing_IMEI" output-type="excel" delivery="ZBRPOIMEIRPT_SUPP">
+<xapi:template type="excel" location="xdo://ZBRPO.ZBRPOIMEIRPT_SUPP.en.00/?getSource=true" />
+</xapi:document>
+</xapi:request>
+</xapi:request>
+<xapi:request select="/LIST_G_MISSING_ITEM/G_MISSING_ITEM">
+<xapi:delivery>
+<xapi:email id="ZBRPOIMEIRPT_ITEM" server="mail.zebra.com" port="25" from="zebranoreplies@zebra.com" reply-to ="zebranoreplies@zebra.com">
+<xapi:message id="ZBRPOIMEIRPT_ITEM" to="RA6422@zebra.com" attachment="true" content-type="text/html" subject="Zebra Technologies - Update Service Repair Attribute">
+<![CDATA[
+<html>
+<body>
+Dear Agile Team,
+<br> </br>
+We are receiving IMEI details from suppliers for the attached list of items, Please update the Service Repair Attribute for them in the system.
+<br> </br>
+Thank you,
+<br> </br>
+Zebra Technologies  
+<br> </br>
+<br> </br>
+Note: Please do not reply to this email. This mailbox does not allow incoming messages.
+<br> </br>
+</body>
+</html>]]>
+</xapi:message>
+</xapi:email>
+</xapi:delivery>
+<xapi:document output="Zebra_Missing_ITEM" output-type="excel" delivery="ZBRPOIMEIRPT_ITEM">
+<xapi:template type="excel" location="xdo://ZBRPO.ZBRPOIMEIRPT_ITEM.en.00/?getSource=true" />
+</xapi:document>
+</xapi:request>
+</xapi:requestset>
