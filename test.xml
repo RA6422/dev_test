@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8" ?> 
+ <dataTemplate name="ZBRPOIMEIRPT" description="ZBRPO IMEI Report for Supplier" 
+			   Version="1.0" defaultPackage="zbrpo_xml_burst">
+ <properties>
+  <property name="debug_mode" value="on"/>
+ </properties> 
+ <parameters>
+  <parameter name="P_SUPPLIER_NUMBER" dataType="character" /> 
+ </parameters>
+ <dataQuery>
+  <sqlStatement name="Q1">
+  <![CDATA[ 
+    SELECT
+    serial_number,
+    item,
+    po_number,
+    shipped_date,
+    mail_to
+FROM
+    imei_test
+   ]]> 
+   </sqlStatement>
+  <sqlStatement name="Q2">
+  <![CDATA[ 
+   SELECT
+    'zebra' source,
+    'TEST_SKU' item_number,
+    'zim' item_description,
+    'SR123' serial_number,
+    'IGNORE' imei,
+    'IGNORE' file_name,
+    'IGNORE' creation_date,
+    'IGNORE' imei_status
+FROM
+    dual
+   ]]> 
+   </sqlStatement>
+  </dataQuery>
+  <dataStructure>
+   <group name="G_SUPP" dataType="varchar2" source="Q1" >
+    <element name="MAIL_TO" dataType="varchar2" value="mail_to" />
+   
+		<group name="G_MISSING_SERIALS" dataType="varchar2" source="Q1">
+			<element name="SERIAL_NUMBER" dataType="varchar2" value="serial_number" /> 
+			<element name="ITEM" dataType="varchar2" value="item" /> 
+			<element name="PO_NUMBER" dataType="varchar2" value="po_number" /> 
+			<element name="SHIPPED_DATE" dataType="varchar2" value="shipped_date" />
+		</group>
+   
+   </group>
+   <group name="G_MISSING_ITEM" dataType="varchar2" source="Q2">
+    <element name="SOURCE" dataType="varchar2" value="source" /> 
+    <element name="ITEM_NUMBER" dataType="varchar2" value="item_number" /> 
+    <element name="SERIAL_NUMBER" dataType="varchar2" value="serial_number" /> 
+    <element name="IMEI" dataType="varchar2" value="imei" /> 
+   </group>
+  </dataStructure>
+  <dataTrigger name="afterReport" source="zbrpo_xml_burst.afterreport(fnd_global.conc_request_id)"/>
+ </dataTemplate>
